@@ -1,0 +1,28 @@
+[gd_scene format=3 uid="uid://m3bcokcp4sma"]
+
+[ext_resource type="Texture2D" uid="uid://bkfx125mwumjj" path="res://icon.svg" id="1_ayk67"]
+[ext_resource type="Script" uid="uid://baibsqil1xsku" path="res://Scripts/ai.gd" id="1_xv65i"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_xv65i"]
+radius = 14.0
+
+[node name="AI" type="CharacterBody2D" unique_id=837299459]
+collision_layer = 2
+motion_mode = 1
+wall_min_slide_angle = 0.0
+script = ExtResource("1_xv65i")
+
+[node name="Sprite2D" type="Sprite2D" parent="." unique_id=1561138372]
+scale = Vector2(0.25, 0.25)
+texture = ExtResource("1_ayk67")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1623064272]
+shape = SubResource("CircleShape2D_xv65i")
+
+[node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1322978478]
+avoidance_enabled = true
+radius = 32.0
+debug_use_custom = true
+debug_path_custom_color = Color(1, 0, 1, 1)
+
+[connection signal="navigation_finished" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_navigation_finished"]
