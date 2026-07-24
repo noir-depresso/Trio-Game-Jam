@@ -24,5 +24,3 @@ avoidance_enabled = true
 radius = 32.0
 debug_use_custom = true
 debug_path_custom_color = Color(1, 0, 1, 1)
-
-[connection signal="navigation_finished" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_navigation_finished"]
