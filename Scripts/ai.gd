@@ -1,7 +1,8 @@
 extends CharacterBody2D
 
-@export var speed: float = 100.0
-@export var player: CharacterBody2D
+# This was a small AI pathfinding script I wrote. Feel free to change parts as this is just showing it works.
+# Even though the navigation is displayed on a 2D flat tilemap, it works for orthographic art as well.
+# the reason for this script to make little guys wander around the map while avoiding trees or buildings or whatever we come up with
 
 var speed = 50.0
 

@@ -45,6 +45,11 @@ scale = Vector2(-3.4267874, -6.6869836)
 
 [node name="Player" parent="." unique_id=1897767716 instance=ExtResource("3_bbyqf")]
 position = Vector2(205, 116)
+dash_speed = null
+dash_duration = null
+dash_cooldown = null
+dash_iframe = null
+targeting_range = null
 
 [node name="Node2D" type="Node2D" parent="." unique_id=868761389]
 
