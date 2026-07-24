@@ -4,11 +4,11 @@ extends CharacterBody2D
 # Even though the navigation is displayed on a 2D flat tilemap, it works for orthographic art as well.
 # the reason for this script to make little guys wander around the map while avoiding trees or buildings or whatever we come up with
 
-var speed = 50.0
-
+@export var speed : float = 50.0
+@export var max_health :float = 100
 @onready var player = get_parent().get_node("Player")
 
-
+var health = max_health;
 
 #var has_reached_target_pos = false
 #var target_pos : Vector2
@@ -27,6 +27,12 @@ func movement():
 	velocity = dir * speed
 	move_and_slide()
 
+func loseHealth(receivedDMG: float) -> void:
+	health -= receivedDMG
+	print("Enemy health: ", health)
+	if health <= 0:
+		print("The enemy fell!")
+		queue_free()
 
 
 	#if navigation.target_position != target_pos: #Checks if the nav target position has been changed, and a new path must be created

@@ -17,13 +17,17 @@ speed = 100.0
 scale = Vector2(0.25, 0.25)
 texture = ExtResource("2_6t5aa")
 
-[node name="CollisionShape2D" type="CollisionShape2D" parent="." unique_id=1623064272]
-shape = SubResource("CircleShape2D_xv65i")
-
 [node name="NavigationAgent2D" type="NavigationAgent2D" parent="." unique_id=1322978478]
 avoidance_enabled = true
 radius = 32.0
 debug_use_custom = true
 debug_path_custom_color = Color(1, 0, 1, 1)
 
+[node name="Hurtbox" type="Area2D" parent="." unique_id=782430444]
+collision_mask = 3
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Hurtbox" unique_id=1623064272]
+shape = SubResource("CircleShape2D_xv65i")
+
 [connection signal="navigation_finished" from="NavigationAgent2D" to="." method="_on_navigation_agent_2d_navigation_finished"]
+[connection signal="body_entered" from="Hurtbox" to="." method="_on_hurtbox_body_entered"]
