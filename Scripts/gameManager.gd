@@ -1,9 +1,8 @@
 extends Node2D
 
-#distance from the origin (0,0)
-@export var rangeX:float = 1000
-@export var rangeY:float = 1000
-#will change to be just outside of camera view
+#range distance of enemy spawning from the player
+@export var range_min:float = 900
+@export var range_max:float = 1000
 
 @export var enemy_scenes: Array[PackedScene] = []
 #in case we add more enemies
@@ -12,6 +11,8 @@ extends Node2D
 @export var enemyNumber: int = 5
 @onready var wave_timer: Timer = $WaveTimer
 @onready var round_timer: Timer = $RoundTimer
+@onready var player: CharacterBody2D = $"../Player"
+
 
 signal round_started(round_number: int)
 
@@ -48,16 +49,18 @@ func spawn(enemy_scene:PackedScene) -> void:
 		print("No enemy scene assigned.")
 		return
 
-	# Create a new copy of the enemy scene.
 	var new_enemy = enemy_scene.instantiate()
 
-	# Choose a random position around the spawner.
-	var random_position = Vector2(
-		randf_range(-rangeX, rangeX),
-		randf_range(-rangeY, rangeY)
+	# get a random direction
+	var direction = Vector2.RIGHT.rotated(randf_range(0, 360))
+	# and a random distance within range
+	var distance = randf_range(range_min, range_max)
+
+	#change the enemy location with the randomized direction and distance. so it gives like a circular ring of possible spawns
+	new_enemy.global_position = (
+		player.global_position
+		+ direction * distance
 	)
 
-	new_enemy.global_position = global_position + random_position
-
-	# Add the enemy to the current scene.
+	# add the enemy to the current scene
 	get_tree().current_scene.add_child(new_enemy)
