@@ -1,13 +1,11 @@
 extends Timer
 
 var previous_second = -1
-
+var roundEnd = false
 
 func _ready() -> void:
-	one_shot = true
 	#wait time is set to 5s for now
 	timeout.connect(_on_round_timer_timeout) #when the timer ends, it calls the function
-
 	print("Timer is starting!")
 	start_round()
 
@@ -34,3 +32,4 @@ func _input(event: InputEvent) -> void:
 
 func _on_round_timer_timeout() -> void:
 	print("Round finished!")
+	
