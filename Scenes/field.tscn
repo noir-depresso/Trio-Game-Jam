@@ -7,6 +7,7 @@
 [ext_resource type="Script" uid="uid://tf2usyyobvyj" path="res://Scripts/roundTimer.gd" id="4_s1lr2"]
 [ext_resource type="Script" uid="uid://cad1t4ih718ec" path="res://Scripts/cameraZoom.gd" id="4_xvgtc"]
 [ext_resource type="Script" uid="uid://c1rl1rm33uprg" path="res://Scripts/gameManager.gd" id="5_fir65"]
+[ext_resource type="Script" uid="uid://8b7mqyschqyd" path="res://Scripts/roundEndScript.gd" id="8_kvtm8"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_bbyqf"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -56,10 +57,63 @@ script = ExtResource("5_fir65")
 enemy_scenes = Array[PackedScene]([ExtResource("2_s2mji")])
 
 [node name="RoundTimer" type="Timer" parent="GameManager" unique_id=1814196995]
-wait_time = 40.0
+wait_time = 10.0
 one_shot = true
 script = ExtResource("4_s1lr2")
+roundTimer = true
 
 [node name="WaveTimer" type="Timer" parent="GameManager" unique_id=2060211281]
 wait_time = 5.0
 script = ExtResource("4_s1lr2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="." unique_id=685372645]
+
+[node name="RoundChoiceUI" type="Control" parent="CanvasLayer" unique_id=412230566]
+process_mode = 2
+visible = false
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("8_kvtm8")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/RoundChoiceUI" unique_id=1459882771]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+alignment = 1
+
+[node name="Label" type="Label" parent="CanvasLayer/RoundChoiceUI/VBoxContainer" unique_id=461695605]
+layout_mode = 2
+text = "The round is over
+Leave or Stay?"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="LeaveButton" type="Button" parent="CanvasLayer/RoundChoiceUI/VBoxContainer" unique_id=693768285]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Leave"
+
+[node name="StayButton" type="Button" parent="CanvasLayer/RoundChoiceUI/VBoxContainer" unique_id=1723803312]
+z_index = 1
+layout_mode = 2
+size_flags_horizontal = 4
+text = "Stay"
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer/RoundChoiceUI" unique_id=343126403]
+z_index = -1
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+color = Color(0.40878493, 0, 0.11120457, 1)

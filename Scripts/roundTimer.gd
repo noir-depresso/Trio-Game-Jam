@@ -1,5 +1,7 @@
 extends Timer
 
+@onready var round_choice_ui: Control = $"../../CanvasLayer/RoundChoiceUI"
+@export var roundTimer = false
 var previous_second = -1
 var roundEnd = false
 
@@ -32,4 +34,6 @@ func _input(event: InputEvent) -> void:
 
 func _on_round_timer_timeout() -> void:
 	print("Round finished!")
+	if(roundTimer):
+		round_choice_ui.open_menu()
 	

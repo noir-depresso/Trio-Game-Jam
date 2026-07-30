@@ -17,28 +17,34 @@ extends Node2D
 signal round_started(round_number: int)
 
 var round: int = 0
+
 #for difficulty scaling later
 var roundEnded = false
 
 func _ready() -> void:
 	wave_timer.timeout.connect(_on_wave_timer_timeout)
 	round_timer.timeout.connect(_on_round_timer_timeout)
+	prepareSpawn()
 	
 
 func _on_wave_timer_timeout() -> void:
 	if(!roundEnded):
-		if enemy_scenes.is_empty():
-			print("No enemy scenes assigned.")
-			return
-		for i in range(enemyNumber):
-			spawn(enemy_scenes[enemyIndex])
+		prepareSpawn()
 	else:
 		wave_timer.stop()
 		
 
+func prepareSpawn() -> void:
+	if enemy_scenes.is_empty():
+		print("No enemy scenes assigned.")
+		return
+	for i in range(enemyNumber+2*round):
+		spawn(enemy_scenes[enemyIndex])
+	return
+
 func _on_round_timer_timeout() -> void:
 	roundEnded = true
-	round+=1
+	nextRound()
 
 # Called every frame. 'delta' is the elapsed time since the previous frame.
 func _process(delta: float) -> void:
@@ -63,4 +69,8 @@ func spawn(enemy_scene:PackedScene) -> void:
 	)
 
 	# add the enemy to the current scene
-	get_tree().current_scene.add_child(new_enemy)
+	get_tree().current_scene.add_child.call_deferred(new_enemy)
+
+func nextRound():
+	round+=1
+	print("current round: ", round)
