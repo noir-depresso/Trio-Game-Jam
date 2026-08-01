@@ -15,9 +15,17 @@ run/main_scene="uid://bx6vf45x7s41v"
 config/features=PackedStringArray("4.6", "Forward Plus")
 config/icon="res://icon.svg"
 
+[autoload]
+
+MCPRuntime="*uid://dvi3ppd3ge5u4"
+
 [dotnet]
 
 project/assembly_name="Trio Game Jam"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/godot_mcp/plugin.cfg")
 
 [input]
 

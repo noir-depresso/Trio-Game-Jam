@@ -12,6 +12,9 @@ extends CharacterBody2D
 @export var recoil_duration: float = 0.1
 @export var dash_damage: float = 15.0
 @onready var hurtbox: Area2D = $Hurtbox
+@onready var hud: Control = $"../CanvasLayer/HUD"
+@export var exp_required: float = 100.0 #TO BE CHANGED
+
 
 var direction = Vector2.ZERO
 var dash_direction = Vector2.ZERO
@@ -19,10 +22,20 @@ var dash_time_left = 0.0
 var dash_cooldown_left = 0.0
 var targeting_mode = false
 var iframe = 0
-var playerHealth = max_health
+var playerHealth
 var recoil_direction =Vector2.ZERO
 var recoil_time_left = 0.0
+var current_exp: float = 0.0
 
+
+func _ready() -> void:
+	playerHealth = max_health
+	print("HUD: ", hud)
+	hud.update_health(max_health, max_health)
+	hud.update_exp(current_exp, exp_required)
+	hud.update_cooldown(0.0, dash_cooldown)
+	
+	
 func _physics_process(delta: float) -> void:
 	direction = Input.get_vector(
 		"move_left",
@@ -42,6 +55,7 @@ func _physics_process(delta: float) -> void:
 
 	if Input.is_action_just_pressed("dash"):
 		start_dash()
+	
 
 #during the dash, you get extra velocity. but the dash_direction is actually locked when you first press the key
 #sprint can be added by having less velocity than the dash but a controllable direction
@@ -56,6 +70,7 @@ func _physics_process(delta: float) -> void:
 		velocity = direction * speed
 
 	move_and_slide()
+	hud.update_cooldown(dash_cooldown_left, dash_cooldown)
 
 func recoil_from(enemy: Node2D) -> void:
 	recoil_direction = enemy.global_position.direction_to(global_position)
@@ -125,7 +140,7 @@ func loseHealth(receivedDMG: float) -> void:
 	iframe = damage_iframe
 	print("Got Hit!")
 	print(playerHealth)
-	
+	hud.update_health(playerHealth, max_health)
 	if playerHealth<=0 :
 		#GAME OVER
 		print("YOU DIED!")
@@ -140,10 +155,26 @@ func _on_hurtbox_body_entered(body: Node2D) -> void:
 
 func hit_enemy(enemy: Node, in_dash: bool) -> void:
 	if in_dash:
-		enemy.loseHealth(dash_damage)
-
+		if(enemy.loseHealth(dash_damage)):
+			gain_exp(10.0)
+		
 		print("Hit enemy!")
 
 	elif iframe <= 0:
 		loseHealth(10)
 		recoil_from(enemy)
+
+
+func gain_exp(amount: float) -> void:
+	current_exp += amount
+
+	if current_exp >= exp_required:
+		current_exp -= exp_required
+		level_up()
+
+	hud.update_exp(current_exp, exp_required)
+
+
+func level_up() -> void:
+	exp_required *= 1.25 #TO BE CHANGED
+	print("Level up!")

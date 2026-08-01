@@ -27,12 +27,14 @@ func movement():
 	velocity = dir * speed
 	move_and_slide()
 
-func loseHealth(receivedDMG: float) -> void:
+func loseHealth(receivedDMG: float) -> bool:
 	health -= receivedDMG
 	print("Enemy health: ", health)
 	if health <= 0:
 		print("The enemy fell!")
 		queue_free()
+		return true
+	return false
 
 
 	#if navigation.target_position != target_pos: #Checks if the nav target position has been changed, and a new path must be created

@@ -8,6 +8,7 @@
 [ext_resource type="Script" uid="uid://cad1t4ih718ec" path="res://Scripts/cameraZoom.gd" id="4_xvgtc"]
 [ext_resource type="Script" uid="uid://c1rl1rm33uprg" path="res://Scripts/gameManager.gd" id="5_fir65"]
 [ext_resource type="Script" uid="uid://8b7mqyschqyd" path="res://Scripts/roundEndScript.gd" id="8_kvtm8"]
+[ext_resource type="Script" uid="uid://b2ynrqrnb0256" path="res://Scripts/HUDscript.gd" id="9_q1k20"]
 
 [sub_resource type="NavigationPolygon" id="NavigationPolygon_bbyqf"]
 vertices = PackedVector2Array(8, 8, -8, 8, -8, -8, 8, -8)
@@ -117,3 +118,28 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 color = Color(0.40878493, 0, 0.11120457, 1)
+
+[node name="HUD" type="Control" parent="CanvasLayer" unique_id=1650307666]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("9_q1k20")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="CanvasLayer/HUD" unique_id=1263525368]
+layout_mode = 0
+offset_right = 40.0
+offset_bottom = 43.0
+
+[node name="HealthBar" type="ProgressBar" parent="CanvasLayer/HUD/VBoxContainer" unique_id=1394093644]
+layout_mode = 2
+show_percentage = false
+
+[node name="SkillCD" type="ProgressBar" parent="CanvasLayer/HUD/VBoxContainer" unique_id=340266186]
+layout_mode = 2
+
+[node name="ExpBar" type="ProgressBar" parent="CanvasLayer/HUD/VBoxContainer" unique_id=32238304]
+layout_mode = 2
+show_percentage = false
